@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Cahier des charges — MesFins</title>
+<style>
+@page { size: A4; margin: 20mm 18mm; }
+* { box-sizing: border-box; }
+body { font-family: "Segoe UI", "Calibri", Arial, sans-serif; font-size: 10.5pt; line-height: 1.5; color: #1a1a1a; }
+h1 { font-size: 20pt; color: #0b3d6b; border-bottom: 3px solid #0b3d6b; padding-bottom: 6px; margin-top: 0; page-break-before: always; }
+h1:first-of-type { page-break-before: auto; }
+h2 { font-size: 15pt; color: #0b3d6b; margin-top: 18px; border-bottom: 1px solid #c9d6e3; padding-bottom: 3px; }
+h3 { font-size: 12pt; color: #1f4e79; margin-top: 14px; }
+p { margin: 6px 0; text-align: justify; }
+ul, ol { margin: 6px 0 6px 20px; }
+li { margin: 3px 0; }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 9.5pt; }
+th, td { border: 1px solid #b7c9db; padding: 5px 7px; vertical-align: top; }
+th { background: #0b3d6b; color: #fff; font-weight: 600; }
+tr:nth-child(even) td { background: #f2f6fa; }
+code { font-family: "Consolas", monospace; font-size: 9pt; background: #f1f1f1; padding: 1px 4px; border-radius: 3px; }
+pre { background: #f4f4f4; border: 1px solid #ddd; padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 9pt; }
+pre code { background: none; padding: 0; }
+blockquote { border-left: 4px solid #0b3d6b; margin: 8px 0; padding: 6px 12px; background: #f2f6fa; font-style: italic; }
+hr { border: none; border-top: 1px solid #c9d6e3; margin: 14px 0; }
+strong { color: #0b3d6b; }
+</style>
+</head>
+<body>
+<h1>CAHIER DES CHARGES — APPLICATION « MESFINS »</h1>
+
+<h2>Gestion mensuelle des revenus, dépenses et épargne</h2>
+
+<p><strong>Version :</strong> 1.0 — document initial</p>
+<p><strong>Date :</strong> 2026-11-07</p>
+<p><strong>Statut :</strong> Validé v1.0 — prêt pour développement MVP v0.1</p>
+<p><strong>Rédacteur :</strong> Expert produit / finance</p>
+<p><strong>Client :</strong> Usage personnel (utilisateur unique), évolutif vers multi-utilisateurs</p>
+
+<hr/>
+
+<h2>1. VISION ET OBJECTIFS</h2>
+
+<h3>1.1 Vision</h3>
+<p>MesFins est une application personnelle de gestion financière mensuelle qui transforme</p>
+<p>les revenus bruts en <strong>plan d'action clair</strong> : ce qu'il reste à vivre, ce qu'il faut</p>
+<p>mettre de côté, ce qu'il est possible d'épargner pour ses projets.</p>
+
+<blockquote><strong>Promesse produit :</strong> « Sachez en 30 secondes où part votre argent, et ce qu'il vous reste à vivre. »</blockquote>
+
+<h3>1.2 Objectifs mesurables</h3>
+<table>
+<thead><tr><th>Objectif</th><th>Mesure de succès</th></tr></thead>
+<tbody>
+<tr><td>Prise de conscience</td><td>L'utilisateur sait en 30 s son reste à vivre et son taux d'épargne</td></tr>
+<tr><td>Discipline</td><td>100 % des dépenses mensuelles récurrentes sont catégorisées</td></tr>
+<tr><td>Épargne</td><td>Taux d'épargne réel ≥ 10 % du revenu net sur 3 mois consécutifs</td></tr>
+<tr><td>Zéro surprise</td><td>Alerte avant tout dépassement d'un seuil défini</td></tr>
+</tbody></table>
+
+<h3>1.3 Hors périmètre (v1)</h3>
+<ul>
+<li>Comptabilité professionnelle / déclarations fiscales</li>
+<li>Multi-devises et taux de change réels</li>
+<li>Connexion bancaire automatique (open banking)</li>
+<li>Gestion de dette / crédit revolving</li>
+<li>Investissements boursiers</li>
+</ul>
+
+<hr/>
+
+<h2>2. PERSONAS ET CAS D'USAGE</h2>
+
+<h3>2.1 Persona principal — « Le salarié conscient »</h3>
+<ul>
+<li>Revenu fixe mensuel (salaire ou revenu freelance récurrent)</li>
+<li>Loyer + factures fixes + dépenses variables</li>
+<li>Objectifs personnels : vacances, voyage, achat, fonds d'urgence</li>
+<li>Besoin : voir en un coup d'œil ce qu'il peut dépenser sans se mettre en danger</li>
+</ul>
+
+<h3>2.2 Cas d'usage clés</h3>
+<ol>
+<li><strong>Saisie du revenu</strong> — renseigner salaire(s) et autres revenus mensuels</li>
+<li><strong>Planification des charges fixes</strong> — loyer, factures, abonnements, crédits</li>
+<li><strong>Suivi des dépenses variables</strong> — alimentation, transport, loisirs, santé</li>
+<li><strong>Définition d'objectifs d'épargne</strong> — vacances, voyage, fonds d'urgence, projets</li>
+<li><strong>Alertes de seuil</strong> — ne pas descendre sous un solde minimum défini</li>
+<li><strong>Options personnalisées</strong> — l'utilisateur ajoute ses propres catégories/champs</li>
+<li><strong>Bilan mensuel</strong> — résumé du mois passé + projection du mois en cours</li>
+<li><strong>Historique</strong> — évolution sur 6 à 12 mois</li>
+</ol>
+
+<hr/>
+
+<h2>3. FONCTIONNALITÉS DÉTAILLÉES</h2>
+
+<h3>3.1 Module A — Revenus (« Ce qui entre »)</h3>
+<ul>
+<li>Saisie du salaire principal (montant net mensuel)</li>
+<li>Ajout de revenus secondaires (freelance, allocations, rentes, cadeaux)</li>
+<li><strong>Revenu total mensuel</strong> = somme des sources actives</li>
+<li>Marquage d'une source comme « récurrente » ou « ponctuelle »</li>
+<li>Historique des revenus par mois (pour projeter la moyenne)</li>
+</ul>
+
+<h3>3.2 Module B — Charges fixes (« Ce qui sort obligatoirement »)</h3>
+<p>Catégories par défaut (modifiables/supprimables) :</p>
+<table>
+<thead><tr><th>Catégorie</th><th>Exemples</th></tr></thead>
+<tbody>
+<tr><td>Logement</td><td>Loyer, charges, crédit immobilier</td></tr>
+<tr><td>Énergie</td><td>Électricité, gaz, eau</td></tr>
+<tr><td>Télécom</td><td>Téléphone, internet, TV</td></tr>
+<tr><td>Assurances</td><td>Santé, habitation, auto</td></tr>
+<tr><td>Crédits</td><td>Prêts personnels, auto, études</td></tr>
+<tr><td>Abonnements</td><td>Streaming, logiciels, sport</td></tr>
+<tr><td>Impôts / taxes</td><td>Taxe habitation, IS, cotisations</td></tr>
+<tr><td>Garde d'enfants / scolarité</td><td>Crèche, école</td></tr>
+</tbody></table>
+
+<p>Fonctionnalités :</p>
+<ul>
+<li>Montant mensuel par charge + jour de prélèvement (pour projection)</li>
+<li>Marquage « payé / à payer »</li>
+<li>Total charges fixes = <strong>charges obligatoires du mois</strong></li>
+<li><strong>Reste après charges fixes</strong> = revenu − charges fixes</li>
+</ul>
+
+<h3>3.3 Module C — Dépenses variables (« Ce qui varie »)</h3>
+<p>Catégories par défaut :</p>
+<ul>
+<li>Alimentation (courses, restaurants, livraison)</li>
+<li>Transport (carburant, transports en commun, VTC)</li>
+<li>Santé / pharmacie</li>
+<li>Hygiène / soins personnels</li>
+<li>Vêtements</li>
+<li>Loisirs / sorties / cadeaux</li>
+<li>Éducation / formation</li>
+<li>Imprévus / autres</li>
+</ul>
+
+<p>Fonctionnalités :</p>
+<ul>
+<li>Saisie rapide (montant + catégorie + date + note)</li>
+<li>Budget mensuel par catégorie (plafond défini par l'utilisateur)</li>
+<li>Alerte à 80 % et 100 % du budget catégorie</li>
+<li>Total dépenses variables du mois</li>
+<li><strong>Reste à vivre</strong> = revenu − charges fixes − dépenses variables</li>
+</ul>
+
+<h3>3.4 Module D — Épargne et projets (« Ce qui se construit »)</h3>
+<ul>
+<li><strong>Fonds d'urgence</strong> : objectif = 3 à 6 mois de charges fixes (calculé auto)</li>
+<li><strong>Projets nommés</strong> : vacances, voyage, achat (voiture, téléphone, meuble…), formation</li>
+<li>Montant cible + date cible → épargne mensuelle nécessaire calculée</li>
+<li>Progression en % et en montant</li>
+<li>Alimentation manuelle (virement vers le compte épargne)</li>
+<li><strong>Taux d'épargne cible</strong> : % du revenu à atteindre (ex. 20 %)</li>
+<li><strong>Solde épargne disponible</strong> : somme des fonds</li>
+</ul>
+
+<h3>3.5 Module E — Seuils et alertes (« Les garde-fous »)</h3>
+<ul>
+<li><strong>Seuil minimum de compte courant</strong> : montant en dessous duquel une alerte rouge s'affiche</li>
+<li><strong>Seuil de dépense mensuelle</strong> : alerte si les dépenses variables dépassent X % du revenu</li>
+<li><strong>Seuil d'épargne</strong> : alerte si le taux d'épargne réel &lt; taux cible</li>
+<li><strong>Alerte prévisionnelle</strong> : « à ce rythme vous dépenserez X avant la fin du mois »</li>
+<li>Notifications in-app (v1) ; push/email en v2</li>
+</ul>
+
+<h3>3.6 Module F — Options personnalisables (« Ce que l'utilisateur ajoute »)</h3>
+<p>L'utilisateur peut créer ses propres éléments, sans code :</p>
+<ul>
+<li><strong>Catégories de dépenses</strong> (nom, couleur, icône, budget)</li>
+<li><strong>Types de charges fixes</strong> (nom, montant, jour de prélèvement, récurrence)</li>
+<li><strong>Projets d'épargne</strong> (nom, montant cible, date, couleur)</li>
+<li><strong>Sources de revenus</strong> (nom, montant, récurrence)</li>
+<li><strong>Champs personnalisés</strong> sur une dépense (ex. « payé par qui », « remboursable »)</li>
+<li><strong>Modèles de mois</strong> : sauvegarder un mois type pour le réutiliser</li>
+</ul>
+
+<h3>3.7 Module G — Tableau de bord (« Vue d'ensemble »)</h3>
+<ul>
+<li><strong>Revenu du mois</strong> / <strong>Charges fixes</strong> / <strong>Dépenses variables</strong> / <strong>Épargne</strong> / <strong>Reste à vivre</strong></li>
+<li>Jauge de reste à vivre (vert / orange / rouge)</li>
+<li>Répartition des dépenses par catégorie (camembert + liste)</li>
+<li>Progression des projets d'épargne</li>
+<li>Comparaison mois courant vs mois précédent (flèches ↑↓)</li>
+<li><strong>Projection de fin de mois</strong> : dépenses projetées si le rythme actuel se poursuit</li>
+</ul>
+
+<h3>3.8 Module H — Bilan et historique</h3>
+<ul>
+<li>Bilan de fin de mois : ce qui est bien passé, ce qui a dérapé, recommandations</li>
+<li>Historique sur 12 mois (graphique en barres empilées)</li>
+<li>Export CSV / PDF (pour un comptable ou pour soi)</li>
+<li>Moyenne mobile sur 3 mois (lissage des dépenses irrégulières)</li>
+</ul>
+
+<hr/>
+
+<h2>4. MODÈLE DE DONNÉES</h2>
+
+<h3>4.1 Entités principales</h3>
+<pre><code>User
+  id, email, devise, salaire_net_mensuel (optionnel), created_at
+
+Income (revenu)
+  id, user_id, label, amount, recurrence (monthly/one-off), active, created_at
+
+FixedExpense (charge fixe)
+  id, user_id, category_id, label, amount, day_of_month, recurrence, paid, created_at
+
+VariableExpense (dépense variable)
+  id, user_id, category_id, amount, date, note, created_at
+
+Category (catégorie)
+  id, user_id, name, type (fixed/variable), color, icon, monthly_budget, is_default, created_at
+
+SavingsGoal (projet d'épargne)
+  id, user_id, name, target_amount, target_date, current_amount, color, created_at
+
+EmergencyFund (fonds d'urgence)
+  id, user_id, target_months (3-6), current_amount
+
+Threshold (seuil)
+  id, user_id, type (min_balance / max_expense_pct / min_savings_rate), value, enabled
+
+MonthSnapshot (bilan mensuel)
+  id, user_id, year, month, income_total, fixed_total, variable_total, savings_total, leftover
+</code></pre>
+
+<h3>4.2 Règles d'intégrité</h3>
+<ul>
+<li>Un montant ne peut jamais être négatif (montant en FCFA entier ≥ 0)</li>
+<li>Une catégorie supprimée réassigne ses dépenses à « Autres »</li>
+<li>Un projet d'épargne atteint 100 % → statut « accompli », archivé</li>
+<li>Le fonds d'urgence cible = <code>charges<em>fixes</em>mensuelles × target_months</code></li>
+</ul>
+
+<hr/>
+
+<h2>5. RÈGLES MÉTIER (logique financière)</h2>
+
+<h3>5.1 Calculs fondamentaux</h3>
+<pre><code>Revenu net mensuel (R)        = Σ revenus actifs
+Charges fixes (CF)            = Σ charges fixes actives
+Dépenses variables (DV)       = Σ dépenses variables du mois
+Épargne réelle (E)            = R − CF − DV
+Taux d'épargne (TE)           = E / R × 100
+Reste à vivre (RAV)           = E  (ce qui reste après tout)
+Reste après charges fixes     = R − CF
+</code></pre>
+
+<h3>5.2 Règles de santé financière</h3>
+<table>
+<thead><tr><th>Indicateur</th><th>Vert</th><th>Orange</th><th>Rouge</th></tr></thead>
+<tbody>
+<tr><td>Taux d'épargne</td><td>≥ 20 %</td><td>10–19 %</td><td>&lt; 10 %</td></tr>
+<tr><td>Charges fixes / revenu</td><td>≤ 50 %</td><td>51–70 %</td><td>&gt; 70 %</td></tr>
+<tr><td>Dépenses variables / revenu</td><td>≤ 30 %</td><td>31–40 %</td><td>&gt; 40 %</td></tr>
+<tr><td>Solde compte courant</td><td>≥ seuil</td><td>seuil−20 %</td><td>&lt; seuil</td></tr>
+</tbody></table>
+
+<h3>5.3 Règles de projection</h3>
+<ul>
+<li><strong>Projection de fin de mois</strong> = dépenses variables à date × (30 / jour_courant)</li>
+<li><strong>Alerte prévisionnelle</strong> déclenchée si projection &gt; budget variables × 1,1</li>
+<li><strong>Mois type</strong> : si un mois est marqué « type », ses montants servent de pré-remplissage pour le mois suivant</li>
+</ul>
+
+<h3>5.4 Règles d'arrondi et de devise</h3>
+<ul>
+<li><strong>Devise par défaut : FCFA (XOF — Franc CFA de l'Afrique de l'Ouest).</strong> Pas de subdivision : le FCFA n'a pas de centimes.</li>
+<li>Tous les montants sont stockés en <strong>unités entières (FCFA)</strong> — pas de flottants, pas de centimes.</li>
+<li>Affichage avec séparateur de milliers (espace) et symbole « FCFA » (ex. : 850 000 FCFA).</li>
+<li>Devise configurable (EUR, USD…) mais FCFA par défaut pour le marché cible.</li>
+<li>Arrondis : aucune décimale affichée (le FCFA est une devise entière).</li>
+</ul>
+
+<hr/>
+
+<h2>6. KPIs ET INDICATEURS</h2>
+
+<h3>6.1 KPIs utilisateur (affichés)</h3>
+<ul>
+<li>Taux d'épargne mensuel et moyenne sur 3 mois</li>
+<li>Reste à vivre en valeur et en %</li>
+<li>Ratio charges fixes / revenu</li>
+<li>Progression de chaque projet d'épargne</li>
+<li>Nombre de mois d'urgence couverts (fonds d'urgence / charges fixes)</li>
+<li>Écart vs mois précédent (par catégorie)</li>
+</ul>
+
+<h3>6.2 KPIs produit (pour l'éditeur)</h3>
+<ul>
+<li>Taux d'activation : % d'utilisateurs ayant saisi revenu + ≥ 1 charge fixe dans les 7 jours</li>
+<li>Rétention : % d'utilisateurs actifs à J30</li>
+<li>Taux d'usage : nombre de dépenses saisies par mois / utilisateur</li>
+<li>Taux d'atteinte d'objectif épargne</li>
+</ul>
+
+<hr/>
+
+<h2>7. ROADMAP MVP (3 versions)</h2>
+
+<h3>v0.1 — « Je sais où va mon argent » (4 semaines)</h3>
+<ul>
+<li>Saisie revenu, charges fixes, dépenses variables</li>
+<li>Catégories par défaut</li>
+<li>Tableau de bord : revenu / charges / variables / reste à vivre</li>
+<li>Alertes de seuil minimum de compte courant</li>
+<li>Stockage local (IndexedDB / localStorage)</li>
+</ul>
+
+<h3>v0.2 — « Je planifie mon épargne » (4 semaines)</h3>
+<ul>
+<li>Projets d'épargne nommés avec progression</li>
+<li>Fonds d'urgence calculé</li>
+<li>Budget par catégorie avec alertes 80/100 %</li>
+<li>Bilan de fin de mois</li>
+<li>Export CSV</li>
+</ul>
+
+<h3>v0.3 — « Je pilote sur le temps » (4 semaines)</h3>
+<ul>
+<li>Historique 12 mois + graphiques</li>
+<li>Options personnalisables (catégories, champs, modèles de mois)</li>
+<li>Projection de fin de mois</li>
+<li>Export PDF</li>
+<li>Synchronisation cloud (optionnelle)</li>
+</ul>
+
+<hr/>
+
+<h2>8. CONTRAINTES TECHNIQUES</h2>
+
+<h3>8.1 Stack recommandée (pour un MVP rapide)</h3>
+<ul>
+<li><strong>Frontend</strong> : React + TypeScript + Tailwind (ou Vue 3)</li>
+<li><strong>Stockage v1</strong> : IndexedDB (offline-first) — pas de backend requis. Montants stockés en FCFA entiers (pas de centimes).</li>
+<li><strong>Stockage v2</strong> : Supabase (auth + Postgres + sync) ou Firebase</li>
+<li><strong>Graphiques</strong> : Recharts ou Chart.js</li>
+<li><strong>PWA</strong> : installable sur mobile, fonctionne hors ligne</li>
+<li><strong>i18n</strong> : français par défaut, anglais en option</li>
+</ul>
+
+<h3>8.2 Contraintes UX</h3>
+<ul>
+<li>Saisie d'une dépense en ≤ 3 taps (montant → catégorie → valider)</li>
+<li>Tableau de bord chargé en &lt; 1 s</li>
+<li>Fonctionne hors ligne (données locales)</li>
+<li>Aucune donnée financière envoyée sans consentement explicite</li>
+<li>Accessible (contraste AA, navigation clavier)</li>
+</ul>
+
+<h3>8.3 Sécurité et confidentialité</h3>
+<ul>
+<li>Données financières = données sensibles</li>
+<li>Chiffrement au repos (IndexedDB chiffré en v2)</li>
+<li>Pas de tracking publicitaire</li>
+<li>Export / suppression des données à la demande (RGPD)</li>
+<li>Authentification biométrique optionnelle sur mobile</li>
+</ul>
+
+<hr/>
+
+<h2>9. GLOSSAIRE</h2>
+
+<table>
+<thead><tr><th>Terme</th><th>Définition</th></tr></thead>
+<tbody>
+<tr><td>Revenu net</td><td>Montant perçu après impôts et cotisations</td></tr>
+<tr><td>Charges fixes</td><td>Dépenses récurrentes obligatoires et prévisibles</td></tr>
+<tr><td>Dépenses variables</td><td>Dépenses dont le montant change d'un mois à l'autre</td></tr>
+<tr><td>Reste à vivre</td><td>Ce qui reste après charges fixes ET dépenses variables</td></tr>
+<tr><td>Taux d'épargne</td><td>Part du revenu mise de côté (en %)</td></tr>
+<tr><td>Fonds d'urgence</td><td>Épargne de sécurité = 3 à 6 mois de charges fixes</td></tr>
+<tr><td>Seuil minimum</td><td>Solde en dessous duquel une alerte est déclenchée</td></tr>
+<tr><td>Mois type</td><td>Modèle de mois réutilisable</td></tr>
+</tbody></table>
+
+<hr/>
+
+<h2>10. ANNEXES</h2>
+
+<h3>10.1 Exemple de tableau de bord (v0.1)</h3>
+<pre><code>┌─────────────────────────────────────────┐
+│  MESFINS — Novembre 2026                │
+├─────────────────────────────────────────┤
+│  Revenu net        :  850 000 FCFA      │
+│  Charges fixes     :  420 000 FCFA  (49%)│
+│  Dépenses variables:  180 000 FCFA  (21%)│
+│  Épargne réelle    :  250 000 FCFA  (29%)│
+│  ─────────────────────────────────────  │
+│  Reste à vivre     :  250 000 FCFA  ✅  │
+├─────────────────────────────────────────┤
+│  🟢 Taux d'épargne 29 %  (cible 20 %)   │
+│  🟢 Charges fixes 49 %  (max 50 %)      │
+│  🟠 Variables 21 %  (cible 30 %)        │
+└─────────────────────────────────────────┘
+</code></pre>
+
+<h3>10.2 Exemple de projet d'épargne</h3>
+<pre><code>Projet : Vacances Abidjan → Dakar
+Cible  : 600 000 FCFA
+Date   : août 2027
+Épargne mensuelle nécessaire : 50 000 FCFA
+Progression : ████████░░░░░░░░  42 %  (250 000 / 600 000)
+</code></pre>
+
+<hr/>
+
+<p><strong>Fin du cahier des charges v1.0.</strong></p>
+<p><strong>Prochaine étape :</strong> validation des objectifs et choix de la stack, puis lancement du MVP v0.1.</p>
+
+
+</body>
+</html>
